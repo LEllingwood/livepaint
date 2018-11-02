@@ -1,10 +1,23 @@
+// server
 const express = require("express")
 const port = 3000
 const app = express()
 
+
 app.use(express.static('public'))
 app.use(express.json())
 
-// Fill in your request handlers here
+let updates = []
 
-app.listen(port)
+app.post("/updates", (request, response) => {
+    console.log(request.body)
+    request.body.userUpdates.forEach(update => {
+        updates.push(update)
+    });
+
+    response.send({
+        updates
+    })
+})
+
+app.listen(port);

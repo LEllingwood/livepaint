@@ -31,7 +31,20 @@ Bitmap.prototype.render = function(target_element) {
 Bitmap.prototype.setColor = function(row, col, color) {
     this.grid[row][col] = color;
     this.cells[row][col].style.background = color;
+    let clientUpdate = [row,col,color]
+    clientUpdates.push(clientUpdate)
 }
+
+Bitmap.prototype.updateColor = function(row, col, color){
+    this.grid[row][col] = color;
+    this.cells[row][col].style.background = color;
+    // line above is storing the html element
+    
+}
+// function to handle responses from server?  applyUpdatesFromServer
+// function(row,col, color)
+//     this.grid(row)(col = color;
+//     this.cells[row][col].style.background = color)
 
 Bitmap.prototype.handleEvent = function(event) {
     if(event.type === "click") {
