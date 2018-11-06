@@ -14,9 +14,13 @@ app.post("/updates", (request, response) => {
     request.body.userUpdates.forEach(update => {
         updates.push(update)
     });
-
+    
+    let unseenUpdates = updates.slice(request.body.lastSequenceNumber)
+    // this creates a new array of as-of-yet unseen changes to the master array.
+    
     response.send({
-        updates
+        updates: unseenUpdates,
+        sequence: updates.length
     })
 })
 

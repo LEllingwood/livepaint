@@ -1,9 +1,9 @@
 // Add logic to this script to poll server every second for updated pixels.
 let clientUpdates = []
-
+let lastSequenceNumber = 0
 
 function updateForNewPixels(){
-    body = JSON.stringify({"userUpdates": clientUpdates})
+    body = JSON.stringify({"userUpdates": clientUpdates, "lastSequenceNumber": lastSequenceNumber})
     clientUpdates = []
     fetch("/updates", {
             method: "POST",
@@ -12,11 +12,11 @@ function updateForNewPixels(){
         })
         .then(response => response.json())
         .then(data => {
+            lastSequenceNumber = data.sequence
             console.log(data.updates)
             data.updates.forEach(update =>{
                 bitmap.updateColor(update[0], update[1], update[2] )
             })
-            // bitmap.updateColor() 
             setTimeout(updateForNewPixels, 1000)      
         })
 }
